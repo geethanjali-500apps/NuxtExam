@@ -1,6 +1,8 @@
 <template>
   <div>
-    <JobsMain :url="url" />
+    <div>
+      <JobsMain :url="url" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">

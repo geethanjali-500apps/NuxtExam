@@ -80,7 +80,9 @@
                     {{ jobsdata.external_source }}
                   </td>
 
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td
+                    class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ml-3"
+                  >
                     {{ jobsdata.description }}
                   </td>
                 </tr>
