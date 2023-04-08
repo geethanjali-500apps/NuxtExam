@@ -53,7 +53,12 @@
   </div>
 </template>
 <script setup lang="ts">
-const heading = ref(["start_time", "end_time", "score", "answers"]);
+const heading = ref([
+  "start_time",
+  "end_time",
+  "assessment_id",
+  "recommendations",
+]);
 
 const props = defineProps({
   totalcandidate: { type: Array, required: true },

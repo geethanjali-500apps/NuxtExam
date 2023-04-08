@@ -57,6 +57,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/vue";
+
 interface candtProps {
   url: string;
 }
@@ -83,32 +84,23 @@ const { pending, data: Candidate } = await useLazyFetch(
   }
 );
 const totalcandidate = Candidate.value;
-const add = async (canddata: any) => {
-  const postData = ref({
-    start_time: "2023-04-06T12:44:14",
-    end_time: "2023-04-06T12:44:14",
-    score: canddata.score,
-    candidate_id: "93c9391071bd4474b1b0a8f0ecbdaac8",
-    assessment_id: "1",
-    answers: {
-      code: '#include<stdio.h>\n#include<string.h>\n\nint main()\n{\n    char str1[20] = "Hello", str2[20] = " World";\n    printf("%s\\n", strcpy(str2, strcat(str1, str2)));\n    return 0;\n}',
-      input_data: "Hello World",
-      custom_output: "Hello World\n",
-    },
-    attempt_count: 1,
-    candidate_device: {
-      "user-agent":
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
-    },
-    recommendations: "dgsgs",
-    uid: "564710f6-bf6e-4642-83dc-bb1545f9c039",
-    id: 202103,
-  });
-  const { data: response } = await useLazyFetch(`${props.url}/`, {
-    method: "POST",
-    headers: authHeader,
-    body: postData.value,
-  });
-  totalcandidate.value.push(response.value);
+const add = async (form: any) => {
+  const { data } = await useAuthLazyFetchPost(
+    `https://v7-stark-db-orm.mercury.infinity-api.net/api/responses/`,
+    {
+      body: {
+        start_time: "2023-04-08T09:27:41.680Z",
+        end_time: "2023-04-08T09:27:41.680Z",
+        score: 0,
+        candidate_id: "string",
+        assessment_id: form.assessment_id,
+        answers: {},
+        attempt_count: 0,
+        candidate_device: {},
+        recommendations: form.recommendations,
+      },
+    }
+  );
+  totalcandidate.value.unshift(data.value);
 };
 </script>
