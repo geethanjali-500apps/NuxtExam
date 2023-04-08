@@ -102,7 +102,6 @@ const externalSource = ref("");
 const description = ref("");
 const emit = defineEmits(["add"]);
 const add = () => {
-  console.log(add, "MMMMMMMMMMMMMMMMM");
   emit(
     "add",
     title.value,
@@ -121,34 +120,4 @@ const add = () => {
   externalSource.value = "";
   description.value;
 };
-console.log(add, "add");
-// const add = (
-//   title: any,
-//   locationId: any,
-//   expiryDate: any,
-//   employmentStatus: any,
-//   jobCount: any,
-//   externalSource: any,
-//   description: any
-// ) => {
-//   // Emit the added tag
-//   emit(
-//     "add",
-//     title,
-//     locationId,
-//     expiryDate,
-//     employmentStatus,
-//     jobCount,
-//     externalSource,
-//     description
-//   );
-//   // Empty textvalue after adding the tag
-//   title = "";
-//   locationId = ";";
-//   expiryDate = "";
-//   employmentStatus = "";
-//   jobCount = "";
-//   externalSource = "";
-//   description = "";
-// };
 </script>
