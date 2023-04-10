@@ -1,17 +1,24 @@
 <template>
-  <div
-    class="block w-full p-4 bg-white border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:bg-gray-700 mt-2"
-  >
-    <div class="flex justify-end">
+  <div class="flex ml-3">
+    <div class="ml-10 flex justify-end">
       <button
         type="button"
         class="rounded-full bg-indigo-600 p-4 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         @click="openModal"
       >
-        Add Contact
+        Add Contacts
       </button>
     </div>
-    <ExamList v-if="contacts" :contacts="contacts" @emitData="emitData" />
+  </div>
+
+  <div
+    class="block w-full p-4 bg-white border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:bg-gray-700 mt-2"
+  >
+    <ExamList
+      v-if="contacts && contacts.length"
+      :contact="contacts"
+      @emitData="emitData"
+    />
   </div>
 
   <TransitionRoot appear :show="isOpen" as="template">
@@ -49,10 +56,10 @@
                 class="text-lg font-medium leading-6 text-gray-900"
               >
               </DialogTitle>
+
               <div>
                 <ExamAdd @add="add" @cancel="isOpen = false"></ExamAdd>
               </div>
-              <div><ExamEdit @edit="edit" :contact="contact"></ExamEdit></div>
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -62,6 +69,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import {
   TransitionRoot,
   TransitionChild,
@@ -82,33 +90,42 @@ function openModal() {
 const contacts: any = ref([]);
 
 onMounted(() => {
-  contacts.value = JSON.parse(localStorage.getItem("contacts"));
+  if (localStorage.getItem("contactDetails"))
+    contacts.value = JSON.parse(localStorage.getItem("contactDetails"));
 });
 
 const add = async (contact: any) => {
   contacts.value.push(contact);
-  localStorage.setItem("contacts", JSON.stringify(contacts.value));
-  getcontacts();
+  localStorage.setItem("contactDetails", JSON.stringify(contacts.value));
+
   isOpen.value = false;
 };
-// Edit contacts
-const edit = async (contact: any) => {
-  contacts[contact.index] = contact;
+// Edit contact
+const edit = async (emp: any) => {
+  contacts.value[emp.index] = emp.emp;
   localStorage.setItem("contactDetails", JSON.stringify(contacts.value));
 };
-// Delete contacts
-const deletecontact = async (contact: any) => {
-  contacts.value.splice(contact.index, 1);
+// Delete contact
+const deletecontact = async (emp: any) => {
+  contacts.value.splice(emp.index, 1);
   localStorage.setItem("contactDetails", JSON.stringify(contacts.value));
 };
 
 // Edit and Delete events
-const emitData = (contact: Object) => {
-  contact.value == "edit" ? edit(contact) : deletecontact(contact);
+const emitData = (emp: Object) => {
+  emp.value == "edit" ? edit(emp) : deletecontact(emp);
 };
 
-// Get contacts
-const getcontacts = async () => {
-  contacts.value = JSON.parse(localStorage.getItem("contacts"));
+const searchQuery = ref();
+
+const getSearchName = () => {
+  if (searchQuery.value) {
+    contacts.value = contacts.value.filter((item: any) => {
+      return item.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    });
+  } else {
+    // If search query is empty, show all contacts
+    contacts.value = JSON.parse(localStorage.getItem("contactDetails"));
+  }
 };
 </script>

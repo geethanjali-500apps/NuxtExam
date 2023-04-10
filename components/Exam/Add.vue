@@ -1,76 +1,73 @@
 <template>
-  <div class="mt-2 pl-2">
+  <div>
     <label
       for="name"
-      class="block text-sm font-medium leading-6 text-gray-900 mr-[31.75rem]"
-      >Name:
-    </label>
-    <div class="mt-2">
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >name:</label
+    >
+    <div class="mt-2.5">
       <input
-        id="name"
-        v-model="contact.name"
-        class="pl-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        placeholder="Enter Name"
+        name="name"
+        v-model="employee.name"
+        id="emp"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
+    </div>
+  </div>
+  <div>
+    <label for="age" class="block text-sm font-semibold leading-6 text-gray-900"
+      >Phone Number:</label
+    >
+    <div class="mt-2.5">
+      <input
+        type="number"
+        name="phoneNumber"
+        v-model="employee.phoneNumber"
+        id="emp"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
     </div>
   </div>
 
-  <div class="mt-2 pl-2">
+  <div>
     <label
-      for="phone"
-      class="block text-sm font-medium leading-6 text-gray-900 mr-[31.75rem]"
-      >phone:
-    </label>
-    <div class="mt-2">
+      for="designation"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >Country:</label
+    >
+    <div class="mt-2.5">
       <input
-        type="number"
-        id="phone"
-        v-model="contact.phone"
-        class="pl-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        placeholder="Enter Phone"
+        v-model="employee.country"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
     </div>
   </div>
-  <div class="mt-2 pl-2">
-    <label
-      for="email"
-      class="block text-sm font-medium leading-6 text-gray-900 mr-[25.75rem]"
-    >
-      country:
-    </label>
-    <div class="mt-2">
-      <input
-        type="email"
-        id="email"
-        v-model="contact.country"
-        class="pl-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        placeholder="Enter Email"
-      />
-    </div>
-  </div>
-  <div>
-    <button
-      type="reset"
-      class="mr-1 rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-    >
-      Cancel
-    </button>
-  </div>
-  <div>
+
+  <div class="mt-10 flex">
     <button
       type="submit"
-      @click="emit('add', contact)"
-      class="rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      @click="emit('cancel')"
+      class="block mr-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Save
+      cancel
+    </button>
+
+    <button
+      type="submit"
+      @click="emit('add', employee)"
+      class="block rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >
+      save
     </button>
   </div>
 </template>
 <script setup lang="ts">
 const emit = defineEmits(["add", "cancel"]);
-const contact = ref({});
-
-const cancel = () => {
-  emit("cancel");
-};
+const employee = ref({
+  name: "",
+  phoneNumber: "",
+  country: "",
+});
 </script>

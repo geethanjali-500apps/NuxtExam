@@ -1,79 +1,81 @@
 <template>
-  <form>
-    <div class="mt-2 pl-2">
-      <label
-        for="name"
-        class="block text-sm font-medium leading-6 text-gray-900 mr-[31.75rem]"
-        >Name:
-      </label>
-      <div class="mt-2">
-        <input
-          id="name"
-          v-model="contact.name"
-          class="pl-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          placeholder="Enter Name"
-        />
-      </div>
+  <div>
+    <label
+      for="name"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >name:</label
+    >
+    <div class="mt-2.5">
+      <input
+        name="name"
+        v-model="contact.name"
+        id="emp"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
     </div>
-    <div class="mt-2 pl-2">
-      <label
-        for="email"
-        class="block text-sm font-medium leading-6 text-gray-900 mr-[25.75rem]"
-      >
-        Email:
-      </label>
-      <div class="mt-2">
-        <input
-          type="email"
-          id="email"
-          v-model="contact.email"
-          class="pl-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          placeholder="Enter Email"
-        />
-      </div>
+  </div>
+  <div>
+    <label for="age" class="block text-sm font-semibold leading-6 text-gray-900"
+      >phone Number:</label
+    >
+    <div class="mt-2.5">
+      <input
+        type="number"
+        name="age"
+        v-model="contact.phoneNumber"
+        id="emp"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
     </div>
-    <div class="mt-2 pl-2">
-      <label
-        for="phone"
-        class="block text-sm font-medium leading-6 text-gray-900 mr-[31.75rem]"
-        >Phone:
-      </label>
-      <div class="mt-2">
-        <input
-          type="number"
-          id="phone"
-          v-model="contact.phone_number"
-          class="pl-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          placeholder="Enter Phone"
-        />
-      </div>
-    </div>
+  </div>
 
-    <div>
-      <button
-        type="reset"
-        class="mr-1 rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-      >
-        Cancel
-      </button>
+  <div>
+    <label for="age" class="block text-sm font-semibold leading-6 text-gray-900"
+      >Country:</label
+    >
+    <div class="mt-2.5">
+      <input
+        type="number"
+        name="age"
+        v-model="contact.country"
+        id="emp"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
     </div>
-    <div>
-      <button
-        type="submit"
-        @click="emit('edit')"
-        class="rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >
-        Save
-      </button>
-    </div>
-  </form>
+  </div>
+
+  <div class="mt-10 flex">
+    <button
+      type="submit"
+      @click="emit('cancel')"
+      class="block mr-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >
+      cancel
+    </button>
+
+    <button
+      type="submit"
+      @click="emit('edit', contact)"
+      class="block rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >
+      update
+    </button>
+  </div>
 </template>
 <script setup lang="ts">
-interface Question {
-  contact: Object;
+interface contact {
+  contact: {
+    name: "";
+    phoneNumber: "";
+    country: "";
+  };
 }
-const props = withDefaults(defineProps<Question>(), {
-  contact: "",
-});
-const emit = defineEmits["edit"];
+const props = defineProps<contact>();
+const contact = ref(props.contact);
+
+// Close input after editing
+const emit = defineEmits(["edit", "cancel"]);
 </script>
