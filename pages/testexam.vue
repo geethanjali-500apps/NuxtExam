@@ -1,5 +1,7 @@
 <template>
   <div>
-    <ExamMain />
+    <div>
+      <ExamMain />
+    </div>
   </div>
 </template>

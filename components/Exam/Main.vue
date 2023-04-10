@@ -1,105 +1,111 @@
 <template>
-  <div class="ml-[45px] mt-5 inset-0 flex items-center justify-start">
-    <!-- <TasksList :totalTasks="totalTasks" /> -->
-    <button
-      type="button"
-      @click="openModal"
-      class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-    >
-      Create a new task
-    </button>
-  </div>
-  <div style="width: fit-content" class="mt-2 ml-3">
-    <EaxmList :totalTasks="totalTasks" />
-  </div>
-  <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-10">
-      <TransitionChild
-        as="template"
-        enter="duration-300 ease-out"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="duration-200 ease-in"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
+  <div
+    class="block w-full p-4 bg-white border border-gray-200 rounded-lg shadow bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:bg-gray-700 mt-2"
+  >
+    <div class="flex justify-end">
+      <button
+        type="button"
+        class="rounded-full bg-indigo-600 p-4 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        @click="open = true"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-25" />
-      </TransitionChild>
-
-      <div class="fixed inset-0 overflow-y-auto">
-        <div
-          class="flex min-h-full items-center justify-center p-4 text-center"
-        >
-          <TransitionChild
-            as="template"
-            enter="duration-300 ease-out"
-            enter-from="opacity-0 scale-95"
-            enter-to="opacity-100 scale-100"
-            leave="duration-200 ease-in"
-            leave-from="opacity-100 scale-100"
-            leave-to="opacity-0 scale-95"
-          >
-            <DialogPanel
-              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+        Add Contacts
+      </button>
+    </div>
+    <ExamList :contactList="contactuser" @deleteDetails="deleteDetails" />
+  </div>
+  <div class="flex justify-end">
+    <TransitionRoot as="template" :show="open">
+      <Dialog as="div" class="relative z-10" @close="open = false">
+        <div class="fixed inset-0" />
+        <div class="fixed inset-0 overflow-hidden">
+          <div class="absolute inset-0 overflow-hidden">
+            <div
+              class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
             >
-              <ExamAdd @add="add" />
-            </DialogPanel>
-          </TransitionChild>
-        </div>
-      </div>
-    </Dialog>
-  </TransitionRoot>
-</template>
+              <TransitionChild
+                as="template"
+                enter-from="translate-x-full"
+                enter-to="translate-x-0"
+                leave-from="translate-x-0"
+                leave-to="translate-x-full"
+              >
+                <DialogPanel class="pointer-events-auto w-screen max-w-md">
+                  <div
+                    class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
+                  >
+                    <div
+                      class="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6"
+                    >
+                      <div class="px-4 sm:px-6">
+                        <div>
+                          <DialogTitle
+                            class="text-base font-semibold leading-6 text-gray-900"
+                            >Add-Contacts</DialogTitle
+                          >
+                          <div>
+                            <ExamAdd @add="addcontact" @cancel="open = false" />
+                          </div>
 
+                          <div class="ml-3 flex h-7 items-center">
+                            <button
+                              type="button"
+                              class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              @click="open = false"
+                            >
+                              <span class="sr-only">Close panel</span>
+                              <XMarkIcon aria-hidden="true" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </DialogPanel>
+              </TransitionChild>
+            </div>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
+  </div>
+</template>
 <script setup lang="ts">
 import { ref } from "vue";
 import {
-  TransitionRoot,
   TransitionChild,
-  Dialog,
   DialogPanel,
-  DialogTitle,
+  TransitionRoot,
+  Dialog,
 } from "@headlessui/vue";
+import { PlusIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
-const isOpen = ref(false);
+const contactuser = ref([]);
 
-const closeModal = () => {
-  isOpen.value = false;
+const addRender = ref(0);
+
+const open = ref(false);
+onMounted(() => {
+  let contactUserList = localStorage.getItem("getUsers");
+  contactuser.value = JSON.parse(contactUserList);
+  console.log("contact user", contactuser.value);
+});
+
+const addUser = () => {
+  open.value = true;
+  addRender.value++;
 };
-const openModal = () => {
-  isOpen.value = true;
+
+const addcontact = (data: any) => {
+  console.log(data, "data");
+  contactuser.value.push(data);
+  localStorage.setItem("getUsers", JSON.stringify(contactuser.value));
+  open.value = false;
 };
-const authHeader = {
-  Authorization:
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoiOTNjOTM5MTA3MWJkNDQ3NGIxYjBhOGYwZWNiZGFhYzgiLCJkIjoiMTY4MDAzNCIsInIiOiJzYSIsInAiOiJmcmVlIiwiYSI6ImZpbmRlci5pbyIsImwiOiJ1czEiLCJleHAiOjE2ODI2MDQxMzd9.fN5GXumFy2qfwx3QUyjbUaVCKmRPwmlYiog3WPw40OQ",
+const deleteDetails = (data: any) => {
+  contactUserList.value.splice(data, 1);
+  localStorage.setItem(
+    "contactUserList",
+    JSON.stringify(contactUserList.value)
+  );
 };
-const { pending, data: tasks } = await useLazyFetch(
-  `https://v1-orm-lib.mars.hipso.cc/tasks/CONTACTS/1?offset=0&limit=100&sort_column=id&sort_direction=desc
-  `,
-  { method: "GET", headers: authHeader }
-);
-const totalTasks = tasks.value;
-console.log(totalTasks);
-const add = async (name: string) => {
-  await useLazyFetch(`https://v1-orm-lib.mars.hipso.cc/tasks/CONTACTS/1`, {
-    method: "POST",
-    headers: authHeader,
-    body: {
-      project_id: "1",
-      entity_id: "1",
-      owner_id: "1",
-      name,
-      category: "new",
-      status: "NEW",
-      description: "hello",
-      entity: "CONTACTS",
-      is_active: "ACTIVE",
-      due_date: "2023-04-05",
-      kanban_order: [],
-    },
-  });
-  // Push new tag
-  totalTags.push(name);
-};
-const saveTask = () => {};
 </script>

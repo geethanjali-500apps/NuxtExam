@@ -1,43 +1,72 @@
 <template>
   <div>
-    <!--Start of Edit tag-->
-    <div>
-      <form class="mt-5 sm:flex sm:items-center">
-        <div class="w-full sm:max-w-xs">
-          <!--Input field with prefilled data-->
-          <input
-            v-model="taskName"
-            type="text"
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            placeholder="Enter tag"
-          />
-        </div>
-        <button
-          type="submit"
-          class="mt-3 inline-flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto"
-          @click="editTask(taskName)"
-        >
-          Save
-        </button>
-      </form>
+    <label
+      for="name"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >name:</label
+    >
+    <div class="mt-2.5">
+      <input
+        name="name"
+        v-model="contact.name"
+        id="project"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
     </div>
-    <!--End of Edit tag-->
+  </div>
+  <div>
+    <label
+      for="listing_type_name"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >Phone Number:</label
+    >
+    <div class="mt-2.5">
+      <input
+        name="listing_type_name"
+        v-model="contact.phonenumber"
+        id="project"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label
+      for="details"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >Country:</label
+    >
+    <div class="mt-2.5">
+      <input
+        name="details"
+        v-model="contact.country"
+        id="project"
+        rows="4"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
+    </div>
+  </div>
+  <div class="mt-10 flex">
+    <button
+      type="submit"
+      @click="emit('cancel')"
+      class="block mr-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >
+      cancel
+    </button>
+
+    <button
+      type="submit"
+      @click="emit('add', contact)"
+      class="block rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    >
+      save
+    </button>
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps({
-  task: {
-    type: String,
-  },
-  uid: Number,
-});
-// Assign edited tag
-const taskName = ref(props.task);
-const emit = defineEmits(["edit"]);
-const editTask = (data: any) => {
-  // Emit the edited tag
-  emit("edit", { uid: props.uid, name: data });
-  // Empty textvalue after editing the tag
-  taskName.value = "";
-};
+// Close input after editing
+const emit = defineEmits(["edit", "cancel"]);
 </script>
