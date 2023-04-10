@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TagsMainTags
+    <TagsMain
       :url="url"
       :entity="entity"
       :entityId="entityId"

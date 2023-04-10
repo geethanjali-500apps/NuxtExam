@@ -5,7 +5,11 @@
       <input
         v-model="title"
         type="text"
+<<<<<<< Updated upstream
         class="block w-full rounded-md border-0 ml-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+=======
+        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+>>>>>>> Stashed changes
         placeholder="  Enter title"
       />
     </div>
@@ -102,6 +106,10 @@ const externalSource = ref("");
 const description = ref("");
 const emit = defineEmits(["add"]);
 const add = () => {
+<<<<<<< Updated upstream
+=======
+  console.log(add, "MMMMMMMMMMMMMMMMM");
+>>>>>>> Stashed changes
   emit(
     "add",
     title.value,
@@ -120,4 +128,37 @@ const add = () => {
   externalSource.value = "";
   description.value;
 };
+<<<<<<< Updated upstream
+=======
+console.log(add, "add");
+// const add = (
+//   title: any,
+//   locationId: any,
+//   expiryDate: any,
+//   employmentStatus: any,
+//   jobCount: any,
+//   externalSource: any,
+//   description: any
+// ) => {
+//   // Emit the added tag
+//   emit(
+//     "add",
+//     title,
+//     locationId,
+//     expiryDate,
+//     employmentStatus,
+//     jobCount,
+//     externalSource,
+//     description
+//   );
+//   // Empty textvalue after adding the tag
+//   title = "";
+//   locationId = ";";
+//   expiryDate = "";
+//   employmentStatus = "";
+//   jobCount = "";
+//   externalSource = "";
+//   description = "";
+// };
+>>>>>>> Stashed changes
 </script>

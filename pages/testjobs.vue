@@ -1,8 +1,12 @@
 <template>
   <div>
+<<<<<<< Updated upstream
     <div>
       <JobsMain :url="url" />
     </div>
+=======
+    <JobsMain :url="url" />
+>>>>>>> Stashed changes
   </div>
 </template>
 <script setup lang="ts">

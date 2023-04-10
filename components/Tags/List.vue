@@ -14,14 +14,14 @@
             <button
               type="button"
               class="ml-0.5 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-500 focus:bg-gray-500 focus:text-white focus:outline-none"
-              @click="deleteTag(tag, index)"
+              @click="deleteItem(tag, index)"
             >
               <XMarkIcon class="h-5 w-5" />
             </button>
           </span>
           <!--Start of edit tag-->
           <PencilIcon class="h-4 w-4 ml-[45px]" @click="editTag(tag)" />
-          <TagsEditTags
+          <TagsEdit
             v-if="editSelectedTag.includes(tag.uid)"
             :uid="tag.uid"
             :tag="tag.name"
@@ -52,10 +52,10 @@ const props = withDefaults(defineProps<TagProps>(), {
 });
 
 // Edit tag
-const editTag = (tag: any) => {
-  // Push the tag's UID into the editSelectedTag array
-  editSelectedTag.value.push(tag.uid);
-};
+// const edit = (tag: any) => {
+//   // Push the tag's UID into the editSelectedTag array
+//   editSelectedTag.value.push(tag.uid);
+// };
 // Edit tag
 const edit = (data: any) => {
   // Emit the added tag
@@ -63,7 +63,7 @@ const edit = (data: any) => {
 };
 
 // Delete tag
-const deleteTag = (data: any, index: any) => {
+const deleteItem = (data: any, index: any) => {
   // Emit the added tag
   emit("delete", data, index);
 };

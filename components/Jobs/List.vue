@@ -80,9 +80,13 @@
                     {{ jobsdata.external_source }}
                   </td>
 
+<<<<<<< Updated upstream
                   <td
                     class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ml-3"
                   >
+=======
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+>>>>>>> Stashed changes
                     {{ jobsdata.description }}
                   </td>
                 </tr>

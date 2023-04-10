@@ -1,14 +1,14 @@
 <template>
   <div>
-    <TagsAddTags @add="add" />
+    <TagsAdd @add="add" />
   </div>
   <div v-if="totalTags">
     <!--List Start of tags-->
-    <TagsListTags
+    <TagsList
       :totalTags="totalTags"
       :alphabets="alphabets"
       @edit="edit"
-      @delete="deleteTag"
+      @delete="deleteItem"
     />
     <!--List End of tags-->
   </div>
@@ -33,7 +33,7 @@ const authHeader = {
 };
 console.log("props", props.url);
 const { pending, data: tags } = await useLazyFetch(
-  `${props.url}/entity/CONTACTS?offset=0&limit=100&sort_column=id&sort_direction=desc`,
+  `https://v7-stark-db-orm.mercury.infinity-api.net/api/jobs/?offset=0&limit=100&sort_column=id&sort_direction=desc`,
   {
     method: "GET",
     headers: authHeader,
@@ -75,7 +75,7 @@ const edit = async (tag: any) => {
     }
   });
 };
-const deleteTag = async (tag: any, index: number) => {
+const delete = async (tag: any, index: number) => {
   await useLazyFetch(`${props.url}/${tag.uid}`, {
     method: "DELETE",
     headers: authHeader,
