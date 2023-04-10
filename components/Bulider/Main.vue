@@ -8,12 +8,12 @@
         class="rounded-full bg-indigo-600 p-4 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         @click="open = true"
       >
-        New project
+        New Bulider
       </button>
     </div>
-    <TestBuilderList
-      v-if="project.length"
-      :project="project"
+    <BuliderList
+      v-if="builder.length"
+      :builder="builder"
       @emitData="emitData"
     />
   </div>
@@ -44,10 +44,13 @@
                         <div>
                           <DialogTitle
                             class="text-base font-semibold leading-6 text-gray-900"
-                            >Add-Project</DialogTitle
+                            >Add-project</DialogTitle
                           >
                           <div>
-                            <TestBuilderAdd @add="add" @cancel="open = false" />
+                            <BuliderAdd
+                              @add="add"
+                              @cancel="open = false"
+                            ></BuliderAdd>
                           </div>
 
                           <div class="ml-3 flex h-7 items-center">
@@ -82,75 +85,69 @@ import {
 } from "@headlessui/vue";
 import { PlusIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
-const project = ref([]);
+const builder = ref([]);
 
 const editInput = ref([]);
 
-const { data: projectdata } = await useAuthLazyFetch(
-  `https://v2-orm-gharpe.mercury.infinity-api.net/api/projects/?offset=0&limit=100&sort_column=id&sort_direction=desc`,
+const { data: builderdata } = await useAuthLazyFetch(
+  `https://v2-orm-gharpe.mercury.infinity-api.net/api/builder/?offset=0&limit=100&sort_column=id&sort_direction=desc`,
   {}
 );
-project.value = projectdata.value;
+builder.value = builderdata.value;
 
 const open = ref(false);
 
-const add = async (project: any) => {
+const add = async (builder: any) => {
   const { data } = await useAuthLazyFetchPost(
-    `https://v2-orm-gharpe.mercury.infinity-api.net/api/projects/`,
+    `https://v2-orm-gharpe.mercury.infinity-api.net/api/builder/`,
     {
       body: {
-        name: project.name,
-        listing_type_name: project.listing_type_name,
-        category: project.category,
-        sub_category: "Apartment",
-        status: project.status,
-        details: project.details,
-        specifications: project.specifications,
-        possession_date: "2023-04-08",
-        age_of_the_project: "string",
-        logo_url: "string",
-        total_project_area: 0,
-        metric: "sq.ft",
-        default_image_url: "string",
-        visit_count: 0,
-        rera_approved: true,
-        approve_status: project.approve_status,
+        name: builder.name,
+        email: builder.email,
+        phone_number: builder.phone_number,
+        established_year: "string",
+        logo: "string",
+        tag_line: "string",
+        reg_details: "string",
+        reg_rera_url: "string",
+        is_active: true,
+        uid: "b2293404-6876-47ae-bae7-60d5401ccc1d",
       },
     }
   );
   open.value = false;
-  await getProjects();
+  await getbuilders();
 };
-const edit = async (project: any) => {
+const edit = async (builder: any) => {
   await useAuthLazyFetchPut(
-    `https://v2-orm-gharpe.mercury.infinity-api.net/api/projects/${project.project.uid}`,
+    `https://v2-orm-gharpe.mercury.infinity-api.net/api/builder/${builder.builder.uid}`,
     {
-      body: project.project,
+      body: builder.builder,
     }
   );
-  await getProjects();
+  await getbuilders();
 };
 
-// Delete Projects
-const deleteProject = async (project: any) => {
+// Delete projects
+const deleteproject = async (builder: any) => {
   await useAuthLazyFetchDelete(
-    `https://v2-orm-gharpe.mercury.infinity-api.net/api/projects/${project.project.uid}`,
+    `https://v2-orm-gharpe.mercury.infinity-api.net/api/builder/${builder.builder.uid}`,
     {}
   );
-  project.value.splice(project.index, 1);
+  builder.value.splice(builder.index, 1);
 };
 
 // Edit and Delete events
-const emitData = (project: Object) => {
-  project.value == "edit" ? edit(project) : deleteProject(project);
+const emitData = (builder: Object) => {
+  builder.value == "edit" ? edit(builder) : deleteproject(builder);
 };
 
-// Get Projects
-const getProjects = async () => {
-  const { data: projectdata } = await useAuthLazyFetch(
+// Get builder
+const getbuilders = async () => {
+  const { data: builderdata } = await useAuthLazyFetch(
     `https://v2-orm-gharpe.mercury.infinity-api.net/api/projects/?offset=0&limit=100&sort_column=id&sort_direction=desc`,
     {}
   );
-  project.value = projectdata.value;
+  builder.value = builderdata.value;
 };
 </script>

@@ -11,7 +11,7 @@
         New project
       </button>
     </div>
-    <TestBuilderList
+    <projectList
       v-if="project.length"
       :project="project"
       @emitData="emitData"
@@ -47,7 +47,10 @@
                             >Add-Project</DialogTitle
                           >
                           <div>
-                            <TestBuilderAdd @add="add" @cancel="open = false" />
+                            <projectAdd
+                              @add="add"
+                              @cancel="open = false"
+                            ></projectAdd>
                           </div>
 
                           <div class="ml-3 flex h-7 items-center">
@@ -100,21 +103,14 @@ const add = async (project: any) => {
     {
       body: {
         name: project.name,
-        listing_type_name: project.listing_type_name,
-        category: project.category,
-        sub_category: "Apartment",
-        status: project.status,
-        details: project.details,
-        specifications: project.specifications,
-        possession_date: "2023-04-08",
-        age_of_the_project: "string",
-        logo_url: "string",
-        total_project_area: 0,
-        metric: "sq.ft",
-        default_image_url: "string",
-        visit_count: 0,
-        rera_approved: true,
-        approve_status: project.approve_status,
+        email: project.email,
+        phone_number: project.phone_number,
+        established_year: "string",
+        logo: "string",
+        tag_line: "string",
+        reg_details: "string",
+        reg_rera_url: "string",
+        is_active: true,
       },
     }
   );

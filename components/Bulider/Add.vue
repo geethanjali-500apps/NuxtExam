@@ -9,10 +9,45 @@
       <input
         name="name"
         v-model="project.name"
-        id="project"
+        id="note"
         rows="4"
         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
+    </div>
+  </div>
+
+  <div>
+    <label
+      for="category"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >category:</label
+    >
+    <div class="mt-2.5">
+      <select
+        v-model="project.category"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      >
+        <option>Residential</option>
+        <option>Commercial</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label
+      for="status"
+      class="block text-sm font-semibold leading-6 text-gray-900"
+      >status:</label
+    >
+    <div class="mt-2.5">
+      <select
+        v-model="project.status"
+        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      >
+        <option>Fully Constructed</option>
+        <option>Under Construction</option>
+        <option>New Venture</option>
+      </select>
     </div>
   </div>
 
@@ -26,7 +61,7 @@
       <input
         name="listing_type_name"
         v-model="project.listing_type_name"
-        id="project"
+        id="note"
         rows="4"
         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
@@ -43,7 +78,7 @@
       <input
         name="details"
         v-model="project.details"
-        id="project"
+        id="note"
         rows="4"
         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
@@ -60,7 +95,7 @@
       <input
         name="specifications"
         v-model="project.specifications"
-        id="project"
+        id="note"
         rows="4"
         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />

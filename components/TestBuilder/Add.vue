@@ -20,12 +20,12 @@
     <label
       for="listing_type_name"
       class="block text-sm font-semibold leading-6 text-gray-900"
-      >listing_type_name:</label
+      >Email:</label
     >
     <div class="mt-2.5">
       <input
         name="listing_type_name"
-        v-model="project.listing_type_name"
+        v-model="project.email"
         id="project"
         rows="4"
         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -37,55 +37,16 @@
     <label
       for="details"
       class="block text-sm font-semibold leading-6 text-gray-900"
-      >details:</label
+      >phone Number:</label
     >
     <div class="mt-2.5">
       <input
         name="details"
-        v-model="project.details"
+        v-model="project.phone_number"
         id="project"
         rows="4"
         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
       />
-    </div>
-  </div>
-
-  <div>
-    <label
-      for="specifications"
-      class="block text-sm font-semibold leading-6 text-gray-900"
-      >specifications:</label
-    >
-    <div class="mt-2.5">
-      <input
-        name="specifications"
-        v-model="project.specifications"
-        id="project"
-        rows="4"
-        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      />
-    </div>
-  </div>
-
-  <div>
-    <label
-      for="approve_status"
-      class="block text-sm font-semibold leading-6 text-gray-900"
-      >approve_status:</label
-    >
-    <div class="mt-2.5">
-      <select
-        v-model="project.approve_status"
-        class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      >
-        <option>Under Review</option>
-        <option>Rejected</option>
-        <option>Active</option>
-        <option>Deleted</option>
-        <option>Expiring Soon</option>
-        <option>Expired</option>
-        <option>Inactive</option>
-      </select>
     </div>
   </div>
 
@@ -111,20 +72,13 @@
 const emit = defineEmits(["add", "cancel"]);
 const project = ref({
   name: "",
-  listing_type_name: "",
-  category: "Residential",
-  sub_category: "Apartment",
-  status: "Fully Constructed",
-  details: "",
-  specifications: "",
-  possession_date: "2023-04-08",
-  age_of_the_project: "string",
-  logo_url: "string",
-  total_project_area: 0,
-  metric: "sq.ft",
-  default_image_url: "string",
-  visit_count: 0,
-  rera_approved: true,
-  approve_status: "Active",
+  email: "",
+  phone_number: "",
+  established_year: "string",
+  logo: "string",
+  tag_line: "string",
+  reg_details: "string",
+  reg_rera_url: "string",
+  is_active: true,
 });
 </script>
