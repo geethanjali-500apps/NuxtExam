@@ -28,9 +28,9 @@
           />
         </div>
         <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2">NAME: {{ contact.name }}</div>
-          <p class="text-gray-700 text-base">Phone: {{ contact.phone }}</p>
-          <p>country: {{ contact.phone }}</p>
+          <div class="font-bold text-xl mb-2">NAME {{ contact.name }}</div>
+          <p class="text-gray-700 text-base">Phone {{ contact.phone }}</p>
+          <p>country {{ contact.phone }}</p>
         </div>
       </div>
     </div>
