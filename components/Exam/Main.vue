@@ -6,106 +6,109 @@
       <button
         type="button"
         class="rounded-full bg-indigo-600 p-4 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        @click="open = true"
+        @click="openModal"
       >
-        Add Contacts
+        Add Student
       </button>
     </div>
-    <ExamList :contactList="contactuser" @deleteDetails="deleteDetails" />
+    <ExamList v-if="contacts" :contacts="contacts" @emitData="emitData" />
   </div>
-  <div class="flex justify-end">
-    <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="open = false">
-        <div class="fixed inset-0" />
-        <div class="fixed inset-0 overflow-hidden">
-          <div class="absolute inset-0 overflow-hidden">
-            <div
-              class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+
+  <TransitionRoot appear :show="isOpen" as="template">
+    <Dialog as="div" @close="closeModal" class="relative z-10">
+      <TransitionChild
+        as="template"
+        enter="duration-300 ease-out"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="duration-200 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+      >
+        <div class="fixed inset-0 bg-black bg-opacity-25" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 overflow-y-auto">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
+          >
+            <DialogPanel
+              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
             >
-              <TransitionChild
-                as="template"
-                enter-from="translate-x-full"
-                enter-to="translate-x-0"
-                leave-from="translate-x-0"
-                leave-to="translate-x-full"
+              <DialogTitle
+                as="h3"
+                class="text-lg font-medium leading-6 text-gray-900"
               >
-                <DialogPanel class="pointer-events-auto w-screen max-w-md">
-                  <div
-                    class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
-                  >
-                    <div
-                      class="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6"
-                    >
-                      <div class="px-4 sm:px-6">
-                        <div>
-                          <DialogTitle
-                            class="text-base font-semibold leading-6 text-gray-900"
-                            >Add-Contacts</DialogTitle
-                          >
-                          <div>
-                            <ExamAdd @add="addcontact" @cancel="open = false" />
-                          </div>
-
-                          <div class="ml-3 flex h-7 items-center">
-                            <button
-                              type="button"
-                              class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              @click="open = false"
-                            >
-                              <span class="sr-only">Close panel</span>
-                              <XMarkIcon aria-hidden="true" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </DialogPanel>
-              </TransitionChild>
-            </div>
-          </div>
+              </DialogTitle>
+              <div>
+                <ExamAdd @add="add" @cancel="isOpen = false"></ExamAdd>
+              </div>
+              <div><ExamEdit @edit="edit" :contact="contact"></ExamEdit></div>
+            </DialogPanel>
+          </TransitionChild>
         </div>
-      </Dialog>
-    </TransitionRoot>
-  </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
+
 <script setup lang="ts">
-import { ref } from "vue";
 import {
-  TransitionChild,
-  DialogPanel,
   TransitionRoot,
+  TransitionChild,
   Dialog,
+  DialogPanel,
+  DialogTitle,
 } from "@headlessui/vue";
-import { PlusIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
-const contactuser = ref([]);
+const isOpen = ref(false);
 
-const addRender = ref(0);
+function closeModal() {
+  isOpen.value = false;
+}
+function openModal() {
+  isOpen.value = true;
+}
 
-const open = ref(false);
+const contacts: any = ref([]);
+
 onMounted(() => {
-  let contactUserList = localStorage.getItem("getUsers");
-  contactuser.value = JSON.parse(contactUserList);
-  console.log("contact user", contactuser.value);
+  contacts.value = JSON.parse(localStorage.getItem("contacts"));
 });
 
-const addUser = () => {
-  open.value = true;
-  addRender.value++;
+const add = async (contact: any) => {
+  contacts.value.push(contact);
+  localStorage.setItem("contacts", JSON.stringify(contacts.value));
+  getcontacts();
+  isOpen.value = false;
+};
+// Edit contacts
+const edit = async (contact: any) => {
+  contacts[contact.index] = contact;
+  localStorage.setItem("contactDetails", JSON.stringify(contacts.value));
+};
+// Delete contacts
+const deletecontact = async (contact: any) => {
+  contacts.value.splice(contact.index, 1);
+  localStorage.setItem("contactDetails", JSON.stringify(contacts.value));
 };
 
-const addcontact = (data: any) => {
-  console.log(data, "data");
-  contactuser.value.push(data);
-  localStorage.setItem("getUsers", JSON.stringify(contactuser.value));
-  open.value = false;
+// Edit and Delete events
+const emitData = (contact: Object) => {
+  contact.value == "edit" ? edit(contact) : deletecontact(contact);
 };
-const deleteDetails = (data: any) => {
-  contactUserList.value.splice(data, 1);
-  localStorage.setItem(
-    "contactUserList",
-    JSON.stringify(contactUserList.value)
-  );
+
+// Get contacts
+const getcontacts = async () => {
+  contacts.value = JSON.parse(localStorage.getItem("contacts"));
 };
 </script>
